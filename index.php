@@ -11,23 +11,30 @@ $directory = new DirectoryManager();
 // Open an existing gif
 //$cat = $gif->openImage('images/test.gif');
 // Create a new file
-$cat = $gif->newImage('images/examplre1');
+$cat = $gif->newImage('images/cat_1.gif');
 
 // Rename File
-$gif->rename('rtrt');
-//$cat->getSize();
-//$cat->getName();
+//$gif->rename('rtrt');
+
+print_r($cat);
+
+echo $cat->getSize();
+echo $cat->getName();
 echo $cat->getPath();
-//$cat->getCreatedTime()->format('Y-m-d H:i:s');
-//$cat->getModifiedTime()->format('Y-m-d H:i:s');
+echo $cat->getCreatedTime()->format('Y-m-d H:i:s');
+echo $cat->getModifiedTime()->format('Y-m-d H:i:s');
 
 // Create Directory within Images
-//$directory->createRootDirectory('tythy');
-//$directory->delete('tythy');
-//$directory->rename('test1', 'hello');
-//$directory->directoryCount('images/');
-//$directory->fileCount('images/');
-//$directory->size('images/');
+//$directory->createRootDirectory('tythy2');
 
-//print_r($directory->listFiles('images/'));
-//print_r($gif->listDirectories('images/'));
+//$directory->delete('tythy');
+
+//print_r($directory->rename('hello12', 'hello1'));
+
+echo $directory->size('images/');
+
+echo $directory->directoryCount('images/hello');
+echo "Folder Size: " . $directory->fileCount('images/');
+
+print_r($directory->listFiles('images/'));
+print_r($directory->listDirectories('images/'));

@@ -1,8 +1,6 @@
 <?php
 namespace Tsc\CatStorageSystem;
 
-use \DateTimeInterface;
-
 class DirectoryClass implements DirectoryInterface {
     /** @var string */
     private $name;
@@ -40,7 +38,7 @@ class DirectoryClass implements DirectoryInterface {
      *
      * @return $this
      */
-    public function setCreatedTime($created): DateTimeInterface{
+    public function setCreatedTime($created): \DateTimeInterface{
         $this->createdTime = $created;
 
         return $created;
@@ -50,7 +48,7 @@ class DirectoryClass implements DirectoryInterface {
      * @return string
      */
     public function getPath() {
-        return $this->path;
+        return $this->name;
     }
 
     /**
@@ -59,9 +57,8 @@ class DirectoryClass implements DirectoryInterface {
      * @return $this
      */
     public function setPath($path) {
-        $this->path = $path;
+        $this->path = $path . '/' . $this->name;
 
         return $this;
-
     }
 }

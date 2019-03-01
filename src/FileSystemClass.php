@@ -6,9 +6,10 @@ class FileSystemClass implements FileSystemInterface {
      * @param FileInterface   $file
      * @param DirectoryInterface $parent
      *
-     * @return FileInterface
+     * @return File
      */
     public function createFile($file, $parent) {
+
         $fileMaker = fopen($file->getName(), "w") or die("Unable to open file!");
         fwrite($fileMaker, date("d/m/Y"));
         fclose($fileMaker);
@@ -18,7 +19,7 @@ class FileSystemClass implements FileSystemInterface {
     /**
      * @param FileInterface $file
      *
-     * @return FileInterface
+     * @return File
      */
     public function updateFile(FileInterface $file) {
         $fileMaker = fopen($file->getName(), "w") or die("Unable to open file!");
@@ -34,7 +35,10 @@ class FileSystemClass implements FileSystemInterface {
      * @return FileInterface
      */
     public function renameFile(FileInterface $file, $newName) {
-        rename($file->getParentDirectory() . '/' . $file->getName(), $file->getParentDirectory() . '/' . $newName);
+        rename($file->getPath(), $file->getParentDirectory()->getPath() . '/' . $newName);
+
+        $file->setName($newName);
+
         return $file;
     }
 
@@ -53,11 +57,10 @@ class FileSystemClass implements FileSystemInterface {
      * @return DirectoryInterface
      */
     public function createRootDirectory(DirectoryInterface $directory) {
-        $path = $directory->getPath() . '/' . $directory->getName() . '/';
-        mkdir($path);
-        $directory->setPath($path);
-        return $directory;
 
+        $directory->setPath(mkdir($directory->getName()));
+
+        return $directory;
     }
 
     /**
@@ -70,7 +73,6 @@ class FileSystemClass implements FileSystemInterface {
         DirectoryInterface $directory, DirectoryInterface $parent
     ) {
         //createRootDirectory can create sub directories.. oh well.
-
     }
 
     /**
@@ -79,22 +81,20 @@ class FileSystemClass implements FileSystemInterface {
      * @return bool
      */
     public function deleteDirectory(DirectoryInterface $directory) {
-        return rmdir('images/' . $directory->getName());
+        return rmdir($directory->getName());
     }
 
     /**
-     * @param DirectoryInterface $directory
+     * @param Directory $directory
      * @param string $newName
      *
      * @return DirectoryInterface
      */
     public function renameDirectory(DirectoryInterface $directory, $newName) {
-        $oldPath = 'images/' . $directory->getName();
-        $NewPath = 'images/' . $newName->getName();
-
-        rename($oldPath, $NewPath);
+        rename($directory->getName(), $newName);
 
         $directory->setPath($NewPath);
+        $directory->setName($newName);
 
         return $directory;
     }
@@ -105,8 +105,6 @@ class FileSystemClass implements FileSystemInterface {
      * @return int
      */
     public function getDirectoryCount(DirectoryInterface $directory) {
-        //return iterator_count(new \DirectoryIterator($directory->getName()));
-        //  return count(glob($directory->getName() . "/[!\.]*"));
         return count(glob($directory->getName() . '/*', GLOB_ONLYDIR));
     }
 
@@ -116,7 +114,7 @@ class FileSystemClass implements FileSystemInterface {
      * @return int
      */
     public function getFileCount(DirectoryInterface $directory) {
-        return count(glob($directory->getName() . '*.{*}', GLOB_BRACE));
+        return count(glob($directory->getName() . '/*.{*}', GLOB_BRACE));
     }
 
     /**
@@ -125,23 +123,16 @@ class FileSystemClass implements FileSystemInterface {
      * @return int
      */
     public function getDirectorySize(DirectoryInterface $directory) {
-        return $this->folderSize($directory->getName());
+        return FolderClass::folderSize($directory->getName());
     }
 
-    public function folderSize($dir) {
-        $size = 0;
-        foreach (glob(rtrim($dir, '/') . '/*', GLOB_NOSORT) as $each) {
-            $size += is_file($each) ? filesize($each) : $this->folderSize($each);
-        }
-        return $size;
-    }
     /**
      * @param DirectoryInterface $directory
      *
      * @return DirectoryInterface[]
      */
     public function getDirectories(DirectoryInterface $directory) {
-        return $this->getFileList("images/", 'dir');
+        return FolderClass::getFileList("images/", 'dir');
     }
 
     /**
@@ -150,48 +141,6 @@ class FileSystemClass implements FileSystemInterface {
      * @return FileInterface[]
      */
     public function getFiles(DirectoryInterface $directory) {
-        return $this->getFileList("images/", 'files');
-    }
-
-    function getFileList($dir, $type) {
-        // array to hold return value
-        $retval = [];
-
-        // add trailing slash if missing
-        if (substr($dir, -1) != "/") {
-            $dir .= "/";
-        }
-
-        // open directory for reading
-        $d = new \DirectoryIterator($dir) or die("getFileList: Failed opening directory $dir for reading");
-        foreach ($d as $fileinfo) {
-            // skip hidden files
-            if ($fileinfo->isDot()) {
-                continue;
-            }
-
-            if ($type == 'dir' && $fileinfo->getType() == "dir") {
-
-                $retval[] = [
-                    'name' => "{$dir}{$fileinfo}",
-                    'type' => ($fileinfo->getType() == "dir") ? "dir" : mime_content_type($fileinfo->getRealPath()),
-                    'size' => $fileinfo->getSize(),
-                    'lastmod' => $fileinfo->getMTime(),
-                ];
-
-            } else if ($type == 'files' && $fileinfo->getType() != "dir") {
-
-                $retval[] = [
-                    'name' => "{$dir}{$fileinfo}",
-                    'type' => ($fileinfo->getType() == "dir") ? "dir" : mime_content_type($fileinfo->getRealPath()),
-                    'size' => $fileinfo->getSize(),
-                    'lastmod' => $fileinfo->getMTime(),
-                ];
-
-            }
-
-        }
-
-        return $retval;
+        return FolderClass::getFileList("images/", 'files');
     }
 }

@@ -29,6 +29,7 @@ class FileClass implements FileInterface {
      */
     public function setName($name) {
         $this->name = $name;
+
         return $this;
     }
 
@@ -46,6 +47,7 @@ class FileClass implements FileInterface {
      */
     public function setSize($size) {
         $this->size = $size;
+
         return $this;
     }
 
@@ -81,6 +83,7 @@ class FileClass implements FileInterface {
      */
     public function setModifiedTime($modified): DateTimeInterface{
         $this->modifiedTime = $modified;
+
         return $modified;
     }
 
@@ -97,7 +100,7 @@ class FileClass implements FileInterface {
      * @return $parent
      */
     public function setParentDirectory($parent): DirectoryClass{
-        $this->parentDirectory = $parent->getName();
+        $this->parentDirectory = $parent;
 
         return $parent;
     }
@@ -106,6 +109,6 @@ class FileClass implements FileInterface {
      * @return string
      */
     public function getPath() {
-        return $this->parentDirectory . "/" . $this->name;
+        return $this->parentDirectory->getPath() . "/" . $this->name;
     }
 }

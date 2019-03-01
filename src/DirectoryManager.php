@@ -1,13 +1,30 @@
 <?php
 namespace Tsc\CatStorageSystem;
 
-class Directory {
+class DirectoryManager extends DirectoryClass {
 
     public function __construct() {
         $this->fileSystem = new FileSystemClass;
         $this->directory = new DirectoryClass;
     }
+    /**
+     * Define Directory
+     *
+     * @return Directory
+     */
+    public function directory($directoryName) {
+        $this->directory
+            ->setName(basename($directoryName))
+            ->setPath(dirname($directoryName));
+        $this->directory->setCreatedTime(new \DateTime('@' . filemtime($directoryName)));
 
+        return $this->directory;
+    }
+    /**
+     * Create a new directory
+     *
+     * @return Directory
+     */
     public function createRootDirectory($newName) {
         $newDirectory = new DirectoryClass;
         $newDirectory->setName($newName)
@@ -19,13 +36,12 @@ class Directory {
     /**
      * Delete Directory
      *
-     * @return $directory
+     * @return bool
      */
-    public function delete($dirName) {
-        $directory = new DirectoryClass;
-        $directory->setName($dirName);
-        return $this->fileSystem->deleteDirectory($directory);
+    public function delete($directory) {
+        $this->directory->setName($directory);
 
+        return $this->fileSystem->deleteDirectory($this->directory);
     }
 
     /**
@@ -34,22 +50,18 @@ class Directory {
      * @return $directory
      */
     public function rename($oldName, $newName) {
-        $oldDirectory = new DirectoryClass;
-        $oldDirectory->setName($oldName);
+        $this->directory->setName($oldName);
 
-        $newDirectory = new DirectoryClass;
-        $newDirectory->setName($newName);
-
-        $directory = $this->fileSystem->renameDirectory($oldDirectory, $newDirectory);
-        return $directory;
+        return $this->fileSystem->renameDirectory($this->directory, $newName);
     }
     /**
      * Count Directories
      *
-     * @return $directory
+     * @return int
      */
-    public function count($directoryName) {
+    public function directoryCount($directoryName) {
         $this->directory->setName($directoryName);
+
         return $this->fileSystem->getDirectoryCount($this->directory);
     }
 
@@ -59,8 +71,9 @@ class Directory {
      * @return string
      */
     public function size($directoryName) {
-        $this->directory->setName($directoryName);
-        return $this->fileSystem->getDirectorySize($this->directory);
+        $directory = $this->directory($directoryName);
+
+        return $this->fileSystem->getDirectorySize($directory);
     }
 
     /**
@@ -69,8 +82,9 @@ class Directory {
      * @return string
      */
     public function fileCount($directoryName) {
-        $this->directory->setName($directoryName);
-        return $this->fileSystem->getFileCount($this->directory);
+        $directory = $this->directory($directoryName);
+
+        return $this->fileSystem->getFileCount($directory);
     }
     /**
      * List of files within directory
@@ -78,8 +92,9 @@ class Directory {
      * @return array
      */
     public function listFiles($directoryName) {
-        $this->directory->setName($directoryName);
-        return $this->fileSystem->getFiles($this->directory);
+        $directory = $this->directory($directoryName);
+
+        return $this->fileSystem->getFiles($directory);
     }
 
     /**
@@ -88,7 +103,8 @@ class Directory {
      * @return array
      */
     public function listDirectories($directoryName) {
-        $this->directory->setName($directoryName);
-        return $this->fileSystem->getDirectories($this->directory);
+        $directory = $this->directory($directoryName);
+
+        return $this->fileSystem->getDirectories($directory);
     }
 }

@@ -14,8 +14,6 @@ class FileClass implements FileInterface {
     private $modifiedTime;
     /** @var string */
     private $parentDirectory;
-    /** @var string */
-    private $path;
 
     /**
      * @return string
@@ -64,7 +62,7 @@ class FileClass implements FileInterface {
      * @return $created
      */
     public function setCreatedTime($created): DateTimeInterface{
-        $this->created = $created;
+        $this->createdTime = $created;
 
         return $created;
     }

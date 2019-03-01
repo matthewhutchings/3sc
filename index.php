@@ -1,12 +1,16 @@
 <?php
 
-require "vendor/autoload.php";
+require 'vendor/autoload.php';
 
+use Symfony\Component\Console\Application;
 use Tsc\CatStorageSystem\DirectoryManager;
 use Tsc\CatStorageSystem\GifClass;
 
 $gif = new GifClass();
 $directory = new DirectoryManager();
+$app = new Application;
+
+$app->register('test');
 
 // Open an existing gif
 //$cat = $gif->openImage('images/test.gif');
@@ -37,4 +41,4 @@ echo $directory->directoryCount('images/hello');
 echo "Folder Size: " . $directory->fileCount('images/');
 
 print_r($directory->listFiles('images/'));
-print_r($directory->listDirectories('images/'));
+//print_r($directory->listDirectories('images/'));

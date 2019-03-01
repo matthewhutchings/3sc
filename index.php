@@ -4,7 +4,8 @@ require "vendor/autoload.php";
 
 use Tsc\CatStorageSystem\GifClass;
 
-$gif = new GifClass("images/cat_1.gif");
+$gif = new GifClass();
 
-$gif->setName("sdfdsfsdf");
+$gif->newFile('test');
+$gif->setSize();
 var_dump($gif);

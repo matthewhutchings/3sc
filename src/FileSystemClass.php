@@ -8,8 +8,12 @@ class FileSystemClass implements FileSystemInterface {
      *
      * @return FileInterface
      */
-    public function createFile() {
+    public function createFile($file, $parent) {
 
+        $fileMaker = fopen("images/" . $file->getName(), "w") or die("Unable to open file!");
+        fwrite($fileMaker, date("d/m/Y"));
+        fclose($fileMaker);
+        return $file;
     }
 
     /**

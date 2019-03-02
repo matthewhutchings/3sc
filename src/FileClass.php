@@ -1,7 +1,7 @@
 <?php
 namespace Tsc\CatStorageSystem;
 
-use \DateTimeInterface;
+use \DateTimeInterface as DateTimeInterface;
 
 class FileClass implements FileInterface {
     /** @var string */
@@ -12,8 +12,6 @@ class FileClass implements FileInterface {
     private $createdTime;
     /** @var DateTime */
     private $modifiedTime;
-    /** @var string */
-    private $parentDirectory;
 
     /**
      * @return string

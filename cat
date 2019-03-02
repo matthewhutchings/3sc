@@ -1,0 +1,16 @@
+#! /usr/local/bin/php
+
+<?php
+require 'vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use Tsc\CatStorageSystem\Console\DirectoryCommand;
+use Tsc\CatStorageSystem\Console\ImageCommand;
+
+$app = new Application('Cat Gif', '1.0');
+
+$app->add(new ImageCommand);
+$app->add(new DirectoryCommand);
+
+
+$app->run();

@@ -19,9 +19,10 @@ class ImageCommand extends Command {
         $this->setName('image')
             ->setDescription('Choose an image')
             ->addArgument('image', InputArgument::REQUIRED, 'What is the image name?')
-            ->addOption('rename', 'r', InputOption::VALUE_REQUIRED, 'Rename A Cat', NULL)
-            ->addOption('delete', 'd', InputOption::VALUE_NONE, 'Delete a Cat', NULL)
-            ->addOption('create', 'c', InputOption::VALUE_NONE, 'Delete a Cat', NULL);
+            ->addOption('create', 'c', InputOption::VALUE_NONE, 'Create a Cat', NULL)
+            ->addOption('rename', 'r', InputOption::VALUE_REQUIRED, 'Rename a Cat', NULL)
+            ->addOption('update', 'u', InputOption::VALUE_REQUIRED, 'Update a Cat', NULL)
+            ->addOption('delete', 'd', InputOption::VALUE_NONE, 'Delete a Cat', NULL);
     }
 
     public function execute(InputInterface $input, OutputInterface $output) {
@@ -34,7 +35,6 @@ class ImageCommand extends Command {
             $output->writeln("The cat has been born... He's a she! She's a he! He's a she-she.");
             die();
         }
-
         if ($input->getOption('rename')) {
             $question = new ConfirmationQuestion("Do you want to rehome this cat? ", false);
             $helper = $this->getHelper('question');
@@ -53,8 +53,8 @@ class ImageCommand extends Command {
             $question = new ConfirmationQuestion("I thought 3 Sided Cube build 'Tech For Good'. \r\n\r\nKilling a cat isn't Good.\r\n\r\nDo you wish to continue? ", false);
 
             if ($helper->ask($input, $output, $question)) {
-
-                $gif->delete($input_image);
+                $gif->openImage('images/' . $input->getArgument('image'));
+                $gif->delete();
                 $io->newLine();
                 $output->writeln('You have just killed a cat.');
                 $io->newLine();

@@ -11,7 +11,9 @@ class FileSystem implements FileSystemInterface {
     public function createFile($file, $parent) {
 
         $fileMaker = fopen($file->getName(), "w") or die("Unable to open file!");
-        fwrite($fileMaker, date("d/m/Y"));
+        $contents = file_get_contents('./src/Resources/cat.php');
+        $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $contents));
+        fwrite($fileMaker, $data);
         fclose($fileMaker);
         return $file;
     }
@@ -23,7 +25,9 @@ class FileSystem implements FileSystemInterface {
      */
     public function updateFile(FileInterface $file) {
         $fileMaker = fopen($file->getName(), "w") or die("Unable to open file!");
-        fwrite($fileMaker, 'Yes');
+        $contents = file_get_contents('./src/Resources/cat1.php');
+        $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $contents));
+        fwrite($fileMaker, $data);
         fclose($fileMaker);
         return $file;
     }
@@ -35,9 +39,7 @@ class FileSystem implements FileSystemInterface {
      * @return FileInterface
      */
     public function renameFile(FileInterface $file, $newName) {
-        rename($file->getPath(), $file->getParentDirectory()->getPath() . '/' . $newName);
-
-        $file->setName($newName);
+        $file->setName(rename($file->getPath(), $file->getParentDirectory()->getPath() . '/' . $newName));
 
         return $file;
     }
@@ -59,7 +61,6 @@ class FileSystem implements FileSystemInterface {
     public function createRootDirectory(DirectoryInterface $directory) {
 
         $directory->setPath(mkdir($directory->getName()));
-
         return $directory;
     }
 
@@ -92,9 +93,6 @@ class FileSystem implements FileSystemInterface {
      */
     public function renameDirectory(DirectoryInterface $directory, $newName) {
         rename($directory->getName(), $newName);
-
-        $directory->setPath($NewPath);
-        $directory->setName($newName);
 
         return $directory;
     }

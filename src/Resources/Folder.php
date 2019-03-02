@@ -1,7 +1,7 @@
 <?php
-namespace Tsc\CatStorageSystem;
+namespace Tsc\CatStorageSystem\Resources;
 
-class FolderClass {
+class Folder {
 
     public static function getFileList($dir, $type) {
         // array to hold return value
@@ -42,6 +42,7 @@ class FolderClass {
      * filtering an array
      */
     public static function filter_by_value($array, $index, $value) {
+        $newarray = [];
         if (is_array($array) && count($array) > 0) {
             foreach (array_keys($array) as $key) {
                 $temp[$key] = $array[$key][$index];

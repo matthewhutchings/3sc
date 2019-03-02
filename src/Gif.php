@@ -1,14 +1,20 @@
 <?php
+
 namespace Tsc\CatStorageSystem;
 
-class GifClass {
+use Tsc\CatStorageSystem\DirectoryManager;
+use Tsc\CatStorageSystem\Resources\Directory;
+use Tsc\CatStorageSystem\Resources\File;
+use Tsc\CatStorageSystem\Resources\FileSystem;
+
+class Gif {
 
     protected $image;
 
     public function __construct() {
-        $this->file = new FileClass;
-        $this->fileSystem = new FileSystemClass;
-        $this->directory = new DirectoryClass;
+        $this->file = new File;
+        $this->fileSystem = new FileSystem;
+        $this->directory = new Directory;
         $this->directoryManager = new DirectoryManager;
     }
     /**
@@ -37,6 +43,7 @@ class GifClass {
     }
 
     private function setFile($filetoUse) {
+
         $file = new \SplFileObject($filetoUse);
 
         $this->directoryManager->directory($file->getPath());

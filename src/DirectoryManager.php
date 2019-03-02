@@ -1,11 +1,14 @@
 <?php
 namespace Tsc\CatStorageSystem;
 
-class DirectoryManager extends DirectoryClass {
+use Tsc\CatStorageSystem\Resources\Directory;
+use Tsc\CatStorageSystem\Resources\FileSystem;
+
+class DirectoryManager extends Directory {
 
     public function __construct() {
-        $this->fileSystem = new FileSystemClass;
-        $this->directory = new DirectoryClass;
+        $this->fileSystem = new FileSystem;
+        $this->directory = new Directory;
     }
     /**
      * Define Directory
@@ -26,7 +29,7 @@ class DirectoryManager extends DirectoryClass {
      * @return Directory
      */
     public function createRootDirectory($newName) {
-        $newDirectory = new DirectoryClass;
+        $newDirectory = new Directory;
         $newDirectory->setName($newName)
             ->setPath('images');
 

@@ -1,9 +1,11 @@
 <?php
-namespace Tsc\CatStorageSystem;
+namespace Tsc\CatStorageSystem\Resources;
 
 use \DateTimeInterface as DateTimeInterface;
 
-class FileClass implements FileInterface {
+//use Tsc\CatStorageSystem\Interface\FileInterface;
+
+class File implements FileInterface {
     /** @var string */
     private $name;
     /** @var int */
@@ -97,7 +99,7 @@ class FileClass implements FileInterface {
      *
      * @return $parent
      */
-    public function setParentDirectory($parent): DirectoryClass{
+    public function setParentDirectory($parent): Directory{
         $this->parentDirectory = $parent;
 
         return $parent;

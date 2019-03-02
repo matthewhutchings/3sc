@@ -1,7 +1,7 @@
 <?php
-namespace Tsc\CatStorageSystem;
+namespace Tsc\CatStorageSystem\Resources;
 
-class DirectoryClass implements DirectoryInterface {
+class Directory implements DirectoryInterface {
     /** @var string */
     private $name;
     /** @var dateTime */
@@ -57,8 +57,7 @@ class DirectoryClass implements DirectoryInterface {
      * @return $this
      */
     public function setPath($path) {
-        $this->path = $path . '/' . $this->name;
-
+        $this->path = $path;
         return $this;
     }
 }

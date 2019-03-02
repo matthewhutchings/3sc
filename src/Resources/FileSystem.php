@@ -1,7 +1,7 @@
 <?php
-namespace Tsc\CatStorageSystem;
+namespace Tsc\CatStorageSystem\Resources;
 
-class FileSystemClass implements FileSystemInterface {
+class FileSystem implements FileSystemInterface {
     /**
      * @param FileInterface   $file
      * @param DirectoryInterface $parent
@@ -123,7 +123,7 @@ class FileSystemClass implements FileSystemInterface {
      * @return int
      */
     public function getDirectorySize(DirectoryInterface $directory) {
-        return FolderClass::folderSize($directory->getName());
+        return Folder::folderSize($directory->getName());
     }
 
     /**
@@ -132,7 +132,7 @@ class FileSystemClass implements FileSystemInterface {
      * @return DirectoryInterface[]
      */
     public function getDirectories(DirectoryInterface $directory) {
-        return FolderClass::getFileList("images/", 'dir');
+        return Folder::getFileList("images/", 'dir');
     }
 
     /**
@@ -141,6 +141,6 @@ class FileSystemClass implements FileSystemInterface {
      * @return FileInterface[]
      */
     public function getFiles(DirectoryInterface $directory) {
-        return FolderClass::getFileList("images/", 'files');
+        return Folder::getFileList("images/", 'files');
     }
 }

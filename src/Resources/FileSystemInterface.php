@@ -1,5 +1,5 @@
 <?php
-namespace Tsc\CatStorageSystem;
+namespace Tsc\CatStorageSystem\Resources;
 
 interface FileSystemInterface {
     /**

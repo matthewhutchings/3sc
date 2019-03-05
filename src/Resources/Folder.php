@@ -45,7 +45,6 @@ class Folder {
         if ($type == 'files') {
             return self::filter_by_value($retval, 'type', 'image/gif');
         }
-
     }
 
     /*

@@ -20,6 +20,7 @@ class FileSystem implements FileSystemInterface {
      */
     public function updateFile(FileInterface $file) {
         Folder::makeFile($file->getPath(), '2');
+
         return $file;
     }
 
@@ -50,8 +51,8 @@ class FileSystem implements FileSystemInterface {
      * @return DirectoryInterface
      */
     public function createRootDirectory(DirectoryInterface $directory) {
-
         $directory->setPath(mkdir($directory->getName()));
+
         return $directory;
     }
 
@@ -132,5 +133,4 @@ class FileSystem implements FileSystemInterface {
     public function getFiles(DirectoryInterface $directory) {
         return Folder::getFileList("images/", 'files');
     }
-
 }

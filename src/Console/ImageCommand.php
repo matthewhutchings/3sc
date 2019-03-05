@@ -53,7 +53,6 @@ class ImageCommand extends Command {
                 $output->writeln('You have re-homed this cat.');
                 die();
             }
-
         }
 
         if ($input->getOption('delete')) {
@@ -80,9 +79,7 @@ class ImageCommand extends Command {
                     $output->writeln("JK, it's dead...");
                 }
                 die();
-
             }
-
         }
 
         $cat = $gif->openImage('images/' . $input->getArgument('image'));
@@ -102,6 +99,5 @@ class ImageCommand extends Command {
             'Folder Path: ' . $cat->parentDirectory->getPath(),
             'Created: ' . $cat->parentDirectory->getCreatedTime()->format('Y-m-d H:i:s'),
         ]);
-
     }
 }

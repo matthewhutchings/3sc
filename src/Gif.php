@@ -42,8 +42,12 @@ class Gif {
         return self::openImage($image->getName());
     }
 
+    /**
+     * @param string   $fileName
+     *
+     * @return File
+     */
     private function setFile($filetoUse) {
-
         $file = new \SplFileObject($filetoUse);
 
         $this->directoryManager->directory($file->getPath());
@@ -61,12 +65,23 @@ class Gif {
         return $this->file;
     }
 
+    /**
+     * @return File
+     */
     public function delete() {
         return $this->fileSystem->deleteFile($this->image);
     }
+
+    /**
+     * @return File
+     */
     public function rename($newName) {
         return $this->fileSystem->renameFile($this->image, $newName);
     }
+
+    /**
+     * @return File
+     */
     public function update() {
         return $this->fileSystem->updateFile($this->image);
     }

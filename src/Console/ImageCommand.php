@@ -21,7 +21,7 @@ class ImageCommand extends Command {
             ->addArgument('image', InputArgument::REQUIRED, 'What is the image name?')
             ->addOption('create', 'c', InputOption::VALUE_NONE, 'Create a Cat', NULL)
             ->addOption('rename', 'r', InputOption::VALUE_REQUIRED, 'Rename a Cat', NULL)
-            ->addOption('update', 'u', InputOption::VALUE_REQUIRED, 'Update a Cat', NULL)
+            ->addOption('update', 'u', InputOption::VALUE_NONE, 'Update a Cat', NULL)
             ->addOption('delete', 'd', InputOption::VALUE_NONE, 'Delete a Cat', NULL);
     }
 
@@ -35,6 +35,15 @@ class ImageCommand extends Command {
             $output->writeln("The cat has been born... He's a she! She's a he! He's a she-she.");
             die();
         }
+
+        $gif->openImage('images/' . $input->getArgument('image'));
+
+        if ($input->getOption('update')) {
+            $cat = $gif->update();
+            $output->writeln("The cat has changed");
+            die();
+        }
+
         if ($input->getOption('rename')) {
             $question = new ConfirmationQuestion("Do you want to rehome this cat? ", false);
             $helper = $this->getHelper('question');
@@ -53,7 +62,7 @@ class ImageCommand extends Command {
             $question = new ConfirmationQuestion("I thought 3 Sided Cube build 'Tech For Good'. \r\n\r\nKilling a cat isn't Good.\r\n\r\nDo you wish to continue? ", false);
 
             if ($helper->ask($input, $output, $question)) {
-                $gif->openImage('images/' . $input->getArgument('image'));
+
                 $gif->delete();
                 $io->newLine();
                 $output->writeln('You have just killed a cat.');

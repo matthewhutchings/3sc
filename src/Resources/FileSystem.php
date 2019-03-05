@@ -9,12 +9,7 @@ class FileSystem implements FileSystemInterface {
      * @return File
      */
     public function createFile($file, $parent) {
-
-        $fileMaker = fopen($file->getName(), "w") or die("Unable to open file!");
-        $contents = file_get_contents('./src/Resources/cat.php');
-        $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $contents));
-        fwrite($fileMaker, $data);
-        fclose($fileMaker);
+        Folder::makeFile($file->getName(), '1');
         return $file;
     }
 
@@ -24,11 +19,7 @@ class FileSystem implements FileSystemInterface {
      * @return File
      */
     public function updateFile(FileInterface $file) {
-        $fileMaker = fopen($file->getName(), "w") or die("Unable to open file!");
-        $contents = file_get_contents('./src/Resources/cat1.php');
-        $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $contents));
-        fwrite($fileMaker, $data);
-        fclose($fileMaker);
+        Folder::makeFile($file->getPath(), '2');
         return $file;
     }
 
@@ -141,4 +132,5 @@ class FileSystem implements FileSystemInterface {
     public function getFiles(DirectoryInterface $directory) {
         return Folder::getFileList("images/", 'files');
     }
+
 }

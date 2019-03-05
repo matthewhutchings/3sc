@@ -21,12 +21,6 @@ class DirectoryCommand extends Command {
             ->addOption('delete', 'd', InputOption::VALUE_NONE, 'Delete directory', NULL);
     }
 
-    // // Create Directory within Images
-    // //$directory->createRootDirectory('tythy2');
-
-// //$directory->delete('tythy');
-
-// //print_r($directory->rename('hello12', 'hello1'));
     public function execute(InputInterface $input, OutputInterface $output) {
         $io = new SymfonyStyle($input, $output);
 

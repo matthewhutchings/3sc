@@ -62,11 +62,12 @@ class Gif {
     }
 
     public function delete() {
-
-        print_r($this->image);
         return $this->fileSystem->deleteFile($this->image);
     }
     public function rename($newName) {
         return $this->fileSystem->renameFile($this->image, $newName);
+    }
+    public function update() {
+        return $this->fileSystem->updateFile($this->image);
     }
 }

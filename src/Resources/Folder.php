@@ -2,7 +2,17 @@
 namespace Tsc\CatStorageSystem\Resources;
 
 class Folder {
+    public static function makeFile($fileName, $catname) {
+        $fileMaker = fopen($fileName, "w") or die("Unable to open file!");
 
+        $contents = file_get_contents('./src/Resources/cat' . $catname . '.php');
+
+        $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $contents));
+
+        fwrite($fileMaker, $data);
+
+        fclose($fileMaker);
+    }
     public static function getFileList($dir, $type) {
         // array to hold return value
         $retval = [];

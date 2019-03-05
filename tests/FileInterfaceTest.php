@@ -3,6 +3,7 @@
 namespace Tsc\CatStorageSystem;
 
 use PHPUnit\Framework\TestCase;
+use Tsc\CatStorageSystem\Resources\FileInterface;
 
 class FileInterfaceTest extends TestCase {
 
